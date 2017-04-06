@@ -139,6 +139,15 @@ typedef void (^PermissionsCallback)(int, BOOL);
                         aspectMode:(VCAspectMode) aspectMode;
 
 // -----------------------------------------------------------------------------
+- (instancetype) initWithVideoSize:(CGSize)videoSize
+                         frameRate:(int)fps
+                           bitrate:(int)bps
+           useInterfaceOrientation:(BOOL)useInterfaceOrientation
+                       cameraState:(VCCameraState) cameraState
+                        aspectMode:(VCAspectMode)aspectMode
+               permissionsCallBack:(PermissionsCallback)permissionsCallBack;
+// -----------------------------------------------------------------------------
+
 
 - (void) startRtmpSessionWithURL:(NSString*) rtmpUrl
                     andStreamKey:(NSString*) streamKey;

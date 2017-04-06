@@ -467,6 +467,28 @@ namespace videocore { namespace simpleApi {
     return self;
 }
 
+- (instancetype) initWithVideoSize:(CGSize)videoSize
+                         frameRate:(int)fps
+                           bitrate:(int)bps
+           useInterfaceOrientation:(BOOL)useInterfaceOrientation
+                       cameraState:(VCCameraState) cameraState
+                        aspectMode:(VCAspectMode)aspectMode
+               permissionsCallBack:(PermissionsCallback)permissionsCallBack
+
+{
+    if (( self = [super init] ))
+    {
+        [self initInternalWithVideoSize:videoSize
+                              frameRate:fps
+                                bitrate:bps
+                useInterfaceOrientation:useInterfaceOrientation
+                            cameraState:cameraState
+                             aspectMode:aspectMode
+                    permissionsCallBack:permissionsCallBack];
+    }
+    return self;
+}
+
 
 
 - (void) initInternalWithVideoSize:(CGSize)videoSize
