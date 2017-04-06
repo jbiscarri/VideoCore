@@ -69,6 +69,10 @@ typedef NS_ENUM(NSInteger, VCFilter) {
     VCFilterGlow
 };
 
+
+
+typedef void (^PermissionsCallback)(int, BOOL);
+
 @protocol VCSessionDelegate <NSObject>
 @required
 - (void) connectionStatusChanged: (VCSessionState) sessionState;

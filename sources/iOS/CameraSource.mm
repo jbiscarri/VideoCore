@@ -32,6 +32,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @interface sbCallback: NSObject<AVCaptureVideoDataOutputSampleBufferDelegate>
@@ -103,7 +104,7 @@ namespace videocore { namespace iOS {
     }
     
     void
-    CameraSource::setupCamera(int fps, bool useFront, bool useInterfaceOrientation, NSString* sessionPreset, void (^callbackBlock)(void))
+    CameraSource::setupCamera(int fps, bool useFront, bool useInterfaceOrientation, NSString* sessionPreset, void (^permissionsCallback)(int, BOOL),  void (^callbackBlock)(void))
     {
         m_fps = fps;
         m_useInterfaceOrientation = useInterfaceOrientation;
@@ -112,6 +113,9 @@ namespace videocore { namespace iOS {
         
         void (^permissions)(BOOL) = ^(BOOL granted) {
             @autoreleasepool {
+                if (permissionsCallback != nil) {
+                    permissionsCallback(0, granted);
+                }
                 if(granted) {
                     
                     int position = useFront ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;

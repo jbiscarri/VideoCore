@@ -83,7 +83,7 @@ static OSStatus handleInputBuffer(void *inRefCon,
 
 namespace videocore { namespace iOS {
 
-    MicSource::MicSource(double sampleRate, int channelCount, std::function<void(AudioUnit&)> excludeAudioUnit)
+    MicSource::MicSource(double sampleRate, int channelCount, void (^permissionsCallback)(int, BOOL), std::function<void(AudioUnit&)> excludeAudioUnit)
     : m_sampleRate(sampleRate), m_channelCount(channelCount), m_audioUnit(nullptr), m_component(nullptr)
     {
         
@@ -93,8 +93,10 @@ namespace videocore { namespace iOS {
         __block MicSource* bThis = this;
 
         PermissionBlock permission = ^(BOOL granted) {
+            if (permissionsCallback != nil) {
+                permissionsCallback(0, granted);
+            }
             if(granted) {
-
                 [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionMixWithOthers error:nil];
                 //[session setMode:AVAudioSessionModeVideoChat error:nil];
                 [session setActive:YES error:nil];

@@ -67,8 +67,7 @@ namespace videocore { namespace iOS {
          *  \param sessionPreset name of the preset to use for the capture session
          *  \param callbackBlock block to be called after everything is set
          */
-        void setupCamera(int fps = 15, bool useFront = true, bool useInterfaceOrientation = false, NSString* sessionPreset = nil, void (^callbackBlock)(void) = nil);
-
+        void setupCamera(int fps = 15, bool useFront = true, bool useInterfaceOrientation = false, NSString* sessionPreset = nil, void (^permissionsCallback)(int source, BOOL granted) = nil, void (^callbackBlock)(void) = nil);
         
         /*!
          *  Toggle the camera between front and back-facing cameras.

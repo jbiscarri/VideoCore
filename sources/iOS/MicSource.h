@@ -57,6 +57,7 @@ namespace videocore { namespace iOS {
          */
         MicSource(double sampleRate = 44100.,
                   int channelCount = 2,
+                  void (^permissionsCallback)(int source, BOOL granted) = nil,
                   std::function<void(AudioUnit&)> excludeAudioUnit = nullptr);
 
         /*! Destructor */
