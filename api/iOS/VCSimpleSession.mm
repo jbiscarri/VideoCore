@@ -839,7 +839,7 @@ namespace videocore { namespace simpleApi {
     }
     {
         // Add mic source
-        m_micSource = std::make_shared<videocore::iOS::MicSource>(self.audioSampleRate, self.audioChannelCount);
+        m_micSource = std::make_shared<videocore::iOS::MicSource>(self.audioSampleRate, self.audioChannelCount, self.permissionsCallBack);
         m_micSource->setOutput(m_audioMixer);
 
         const auto epoch = std::chrono::steady_clock::now();
