@@ -403,8 +403,9 @@ namespace videocore { namespace simpleApi {
                                 bitrate:bps
                 useInterfaceOrientation:NO
                             cameraState:VCCameraStateBack
-                             aspectMode:VCAspectModeFit];
-
+                             aspectMode:VCAspectModeFit
+                    permissionsCallBack:nil];
+        
     }
     return self;
 }
@@ -421,7 +422,8 @@ namespace videocore { namespace simpleApi {
                                 bitrate:bps
                 useInterfaceOrientation:useInterfaceOrientation
                             cameraState:VCCameraStateBack
-                             aspectMode:VCAspectModeFit];
+                             aspectMode:VCAspectModeFit
+                    permissionsCallBack:nil];
     }
     return self;
 }
@@ -439,7 +441,8 @@ namespace videocore { namespace simpleApi {
                                 bitrate:bps
                 useInterfaceOrientation:useInterfaceOrientation
                             cameraState:cameraState
-                             aspectMode:VCAspectModeFit];
+                             aspectMode:VCAspectModeFit
+                    permissionsCallBack:nil];
     }
     return self;
 }
