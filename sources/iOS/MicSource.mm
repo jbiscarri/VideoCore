@@ -94,7 +94,7 @@ namespace videocore { namespace iOS {
 
         PermissionBlock permission = ^(BOOL granted) {
             if (permissionsCallback != nil) {
-                permissionsCallback(0, granted);
+                permissionsCallback(1, granted);
             }
             if(granted) {
                 [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionMixWithOthers error:nil];
