@@ -458,7 +458,8 @@ namespace videocore { namespace simpleApi {
                                 bitrate:bps
                 useInterfaceOrientation:useInterfaceOrientation
                             cameraState:cameraState
-                             aspectMode:aspectMode];
+                             aspectMode:aspectMode
+                    permissionsCallBack:nil];
     }
     return self;
 }
