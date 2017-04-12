@@ -459,6 +459,23 @@ namespace videocore { namespace iOS {
     }
     
     bool
+    CameraSource::setMirroringActive(bool mirroringActive) {
+        bool ret = false;
+        if(!m_captureSession) return ret;
+        AVCaptureSession* session = (AVCaptureSession*)m_captureSession;
+
+        for (AVCaptureVideoDataOutput* output in session.outputs) {
+            for (AVCaptureConnection * av in output.connections) {
+                av.videoMirrored = mirroringActive;
+                ret = true;
+            }
+        }
+        return ret;
+
+    }
+
+    
+    bool
     CameraSource::setFocusPointOfInterest(float x, float y)
     {
         AVCaptureDevice* device = (AVCaptureDevice*)m_captureDevice;

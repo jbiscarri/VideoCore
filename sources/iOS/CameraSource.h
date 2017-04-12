@@ -113,6 +113,9 @@ namespace videocore { namespace iOS {
         
         bool setContinuousExposure(bool wantsContinuous);
         
+        bool setMirroringActive(bool mirroringActive);
+
+        
         
     public:
         /*! Used by Objective-C Capture Session */

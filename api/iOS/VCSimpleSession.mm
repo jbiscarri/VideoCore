@@ -141,6 +141,8 @@ namespace videocore { namespace simpleApi {
     BOOL _useAdaptiveBitrate;
     BOOL _continuousAutofocus;
     BOOL _continuousExposure;
+    BOOL _mirroring;
+
     CGPoint _focusPOI;
     CGPoint _exposurePOI;
     
@@ -168,6 +170,7 @@ namespace videocore { namespace simpleApi {
 @dynamic micGain;
 @dynamic continuousAutofocus;
 @dynamic continuousExposure;
+@dynamic mirroring;
 @dynamic focusPointOfInterest;
 @dynamic exposurePointOfInterest;
 @dynamic useAdaptiveBitrate;
@@ -356,6 +359,14 @@ namespace videocore { namespace simpleApi {
     }
 }
 
+- (void) setMirroring:(BOOL)mirroring
+{
+    _mirroring = mirroring;
+    if(m_cameraSource) {
+        m_cameraSource->setMirroringActive(mirroring);
+    }
+}
+
 - (void) setFocusPointOfInterest:(CGPoint)focusPointOfInterest {
     _focusPOI = focusPointOfInterest;
 
@@ -515,7 +526,7 @@ namespace videocore { namespace simpleApi {
     _cameraState = cameraState;
     _exposurePOI = _focusPOI = CGPointMake(0.5f, 0.5f);
     _continuousExposure = _continuousAutofocus = YES;
-
+    _mirroring = NO;
     _graphManagementQueue = dispatch_queue_create("com.videocore.session.graph", 0);
 
     __block VCSimpleSession* bSelf = self;
@@ -800,7 +811,8 @@ namespace videocore { namespace simpleApi {
         std::dynamic_pointer_cast<videocore::iOS::CameraSource>(m_cameraSource)->setupCamera(self.fps,(self.cameraState == VCCameraStateFront),self.useInterfaceOrientation,nil, self.permissionsCallBack, ^{
             m_cameraSource->setContinuousAutofocus(true);
             m_cameraSource->setContinuousExposure(true);
-            
+            m_cameraSource->setMirroringActive(false);
+
             m_cameraSource->setOutput(aspectTransform);
             
             m_videoMixer->setSourceFilter(m_cameraSource, dynamic_cast<videocore::IVideoFilter*>(m_videoMixer->filterFactory().filter("com.videocore.filters.bgra")));
