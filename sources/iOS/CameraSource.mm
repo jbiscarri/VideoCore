@@ -204,6 +204,8 @@ namespace videocore { namespace iOS {
                 }
                 else if(auth == AVAuthorizationStatusNotDetermined) {
                     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:permissions];
+                } else {
+                    permissions(false);
                 }
             } else {
                 permissions(true);
