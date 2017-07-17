@@ -526,7 +526,7 @@ namespace videocore { namespace simpleApi {
     _cameraState = cameraState;
     _exposurePOI = _focusPOI = CGPointMake(0.5f, 0.5f);
     _continuousExposure = _continuousAutofocus = YES;
-    _mirroring = NO;
+    _mirroring = YES;
     _graphManagementQueue = dispatch_queue_create("com.videocore.session.graph", 0);
 
     __block VCSimpleSession* bSelf = self;
@@ -811,7 +811,7 @@ namespace videocore { namespace simpleApi {
         std::dynamic_pointer_cast<videocore::iOS::CameraSource>(m_cameraSource)->setupCamera(self.fps,(self.cameraState == VCCameraStateFront),self.useInterfaceOrientation,nil, self.permissionsCallBack, ^{
             m_cameraSource->setContinuousAutofocus(true);
             m_cameraSource->setContinuousExposure(true);
-            m_cameraSource->setMirroringActive(false);
+            m_cameraSource->setMirroringActive(_mirroring);
 
             m_cameraSource->setOutput(aspectTransform);
             
