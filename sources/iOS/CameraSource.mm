@@ -334,60 +334,63 @@ namespace videocore { namespace iOS {
     {
         if(!m_captureSession) return;
         
-        auto orientation = m_useInterfaceOrientation ? [[UIApplication sharedApplication] statusBarOrientation] : [[UIDevice currentDevice] orientation];
-        
-        // use interface orientation as fallback if device orientation is facedown, faceup or unknown
-        if(orientation==UIDeviceOrientationFaceDown || orientation==UIDeviceOrientationFaceUp || orientation==UIDeviceOrientationUnknown) {
-            orientation =[[UIApplication sharedApplication] statusBarOrientation];
-        }
-        
-        //bool reorient = false;
-        
-        AVCaptureSession* session = (AVCaptureSession*)m_captureSession;
-        // [session beginConfiguration];
-        
-        for (AVCaptureVideoDataOutput* output in session.outputs) {
-            for (AVCaptureConnection * av in output.connections) {
-                
-                switch (orientation) {
-                        // UIInterfaceOrientationPortraitUpsideDown, UIDeviceOrientationPortraitUpsideDown
-                    case UIInterfaceOrientationPortraitUpsideDown:
-                        if(av.videoOrientation != AVCaptureVideoOrientationPortraitUpsideDown) {
-                            av.videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
-                        //    reorient = true;
-                        }
-                        break;
-                        // UIInterfaceOrientationLandscapeRight, UIDeviceOrientationLandscapeLeft
-                    case UIInterfaceOrientationLandscapeRight:
-                        if(av.videoOrientation != AVCaptureVideoOrientationLandscapeRight) {
-                            av.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
-                        //    reorient = true;
-                        }
-                        break;
-                        // UIInterfaceOrientationLandscapeLeft, UIDeviceOrientationLandscapeRight
-                    case UIInterfaceOrientationLandscapeLeft:
-                        if(av.videoOrientation != AVCaptureVideoOrientationLandscapeLeft) {
-                            av.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
-                         //   reorient = true;
-                        }
-                        break;
-                        // UIInterfaceOrientationPortrait, UIDeviceOrientationPortrait
-                    case UIInterfaceOrientationPortrait:
-                        if(av.videoOrientation != AVCaptureVideoOrientationPortrait) {
-                            av.videoOrientation = AVCaptureVideoOrientationPortrait;
-                        //    reorient = true;
-                        }
-                        break;
-                    default:
-                        break;
+        dispatch_async(dispatch_get_main_queue(), ^{
+                 
+            auto orientation = m_useInterfaceOrientation ? [[UIApplication sharedApplication] statusBarOrientation] : [[UIDevice currentDevice] orientation];
+            
+            // use interface orientation as fallback if device orientation is facedown, faceup or unknown
+            if(orientation==UIDeviceOrientationFaceDown || orientation==UIDeviceOrientationFaceUp || orientation==UIDeviceOrientationUnknown) {
+                orientation =[[UIApplication sharedApplication] statusBarOrientation];
+            }
+            
+            //bool reorient = false;
+            
+            AVCaptureSession* session = (AVCaptureSession*)m_captureSession;
+            // [session beginConfiguration];
+            
+            for (AVCaptureVideoDataOutput* output in session.outputs) {
+                for (AVCaptureConnection * av in output.connections) {
+                    
+                    switch (orientation) {
+                            // UIInterfaceOrientationPortraitUpsideDown, UIDeviceOrientationPortraitUpsideDown
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            if(av.videoOrientation != AVCaptureVideoOrientationPortraitUpsideDown) {
+                                av.videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
+                            //    reorient = true;
+                            }
+                            break;
+                            // UIInterfaceOrientationLandscapeRight, UIDeviceOrientationLandscapeLeft
+                        case UIInterfaceOrientationLandscapeRight:
+                            if(av.videoOrientation != AVCaptureVideoOrientationLandscapeRight) {
+                                av.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+                            //    reorient = true;
+                            }
+                            break;
+                            // UIInterfaceOrientationLandscapeLeft, UIDeviceOrientationLandscapeRight
+                        case UIInterfaceOrientationLandscapeLeft:
+                            if(av.videoOrientation != AVCaptureVideoOrientationLandscapeLeft) {
+                                av.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+                             //   reorient = true;
+                            }
+                            break;
+                            // UIInterfaceOrientationPortrait, UIDeviceOrientationPortrait
+                        case UIInterfaceOrientationPortrait:
+                            if(av.videoOrientation != AVCaptureVideoOrientationPortrait) {
+                                av.videoOrientation = AVCaptureVideoOrientationPortrait;
+                            //    reorient = true;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-        }
 
-        //[session commitConfiguration];
-        if(m_torchOn) {
-            setTorch(m_torchOn);
-        }
+            //[session commitConfiguration];
+            if(m_torchOn) {
+                setTorch(m_torchOn);
+            }
+        });
     }
     void
     CameraSource::setOutput(std::shared_ptr<IOutput> output)
