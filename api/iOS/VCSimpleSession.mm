@@ -528,6 +528,7 @@ namespace videocore { namespace simpleApi {
     _continuousExposure = _continuousAutofocus = YES;
     _mirroring = YES;
     _graphManagementQueue = dispatch_queue_create("com.videocore.session.graph", 0);
+    dispatch_set_target_queue(_graphManagementQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
 
     __block VCSimpleSession* bSelf = self;
     self.permissionsCallBack = permissionsCallBack;
