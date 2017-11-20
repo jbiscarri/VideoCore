@@ -320,12 +320,11 @@ namespace videocore { namespace iOS {
                 
                 m_captureDevice = newCamera;
                 [newCamera unlockForConfiguration];
-                [session commitConfiguration];
                 
                 [newVideoInput release];
             }
-            
             reorientCamera();
+            [session performSelector:@selector(commitConfiguration) withObject:nil afterDelay:.1];
         }
     }
     
